@@ -133,7 +133,8 @@ var process = function(e){
 				if(userInput === "pick up rocket launcher"){
 					rockCarry = true;
 					console.log("rockCarry = " + rockCarry);
-					contentBox.innerHTML = "You picked up the rocket launcher. what will you do now?";
+					process()
+					
 
 				}else{
 					if(userInput === "north"||userInput === "go north"){
@@ -141,7 +142,7 @@ var process = function(e){
 						process();
 					}else if(userInput === "east" || userInput === " go east" ){
 						pos = "E";
-						process();
+						process();     
 					}else if(userInput === "south"||userInput === "go south"){
 						pos = "S";
 						process();
@@ -240,12 +241,15 @@ var process = function(e){
 						console.log("brickCarry = " + brickCarry)
 						brick = 5
 					}else if(userInput == "leave"){
+						pos = 'center'
+						process()
 
 					}
 			}else if(brickHole == 1){
 				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
 				if(userInput == "leave"){
 					pos = 'center';
+					process()
 				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
 					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
 					brickHole = 5;
@@ -257,7 +261,7 @@ var process = function(e){
 			contentBox.innerHTML = "You are in the north room, there is nothing here. Will you leave the room?";
 				if(userInput == "yes"){
 					pos = 'center';
-					porcess
+					porcess()
 				}else{}
 			}
 			prePos = 'N'
@@ -311,12 +315,14 @@ var process = function(e){
 						brick = 5
 					}else if(userInput == "leave"){
 						pos = 'center'
+						process()
 
 					}
 			}else if(brickHole == 2){
 				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
 				if(userInput == "leave"|| userInput == "west"){
 					pos = 'center';
+					process()
 				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
 					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue"
 					brickHole = 5;
@@ -325,13 +331,13 @@ var process = function(e){
 				}
 			}else{
 			contentBox.innerHTML = "You are in the east room, there is nothing here. Will you leave the room";
-				if(userInput == "yes"){
+			if(userInput == "yes"){
 					pos = 'center';
 					process()
 
-				}else{}
 			}
-			prePos = 'E'
+		}
+		prePos = 'E'
 
 
 
@@ -383,6 +389,7 @@ var process = function(e){
 						brick = 5
 					}else if(userInput == "leave"){
 						pos = 'center'
+						process()
 
 					}
 			}else if(brickHole == 3){
@@ -397,8 +404,9 @@ var process = function(e){
 				}
 			}else{
 			contentBox.innerHTML = "You are in the south room, there is nothing here. Will you leave the room";
-				if(userInput === "yes"|| userInput == "north"){
+				if(userInput === "yes"){
 					pos = 'center';
+					process()
 
 				}else{}
 			}
@@ -452,12 +460,13 @@ var process = function(e){
 						console.log("brickCarry = " +brickCarry);
 						brick = 5
 					}else if(userInput == "leave"|| userInput == "east"){
-
+						pos = 'center'
 					}
 			}else if(brickHole == 0){
 				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
 				if(userInput == "leave"){
 					pos = 'center';
+					process()
 				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
 					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
 					brickHole = 5;
@@ -466,10 +475,9 @@ var process = function(e){
 				}			
 			}else{
 			contentBox.innerHTML = "You are in the west room, there is nothing here. Will you leave the room";
-				if(userInput == "yes"|| userInput == "east"){
+				if(userInput == "yes"){
 					pos = 'center';
-
-				}else{
+					process()
 
 				}
 			}
@@ -483,7 +491,6 @@ var process = function(e){
 var process = function(){
 	var contentBox = document.getElementById('contentBox');
 	var userInput = document.getElementById('inputBox').value;
-
 	//checks what pos the user is in and puts them in the right room
 	if(pos === 'center'){
 		if(rock == true && rockCarry == false){
@@ -491,7 +498,7 @@ var process = function(){
 			if(userInput === "pick up rocket launcher"){
 				rockCarry = true;
 				console.log("rockCarry = " + rockCarry);
-				contentBox.innerHTML = "You picked up the rocket launcher. what will you do now?";
+				process()
 
 			}else{
 				if(userInput === "north"||userInput === "go north"){
@@ -499,7 +506,7 @@ var process = function(){
 					process();
 				}else if(userInput === "east" || userInput === " go east" ){
 					pos = "E";
-					process();
+					process();     
 				}else if(userInput === "south"||userInput === "go south"){
 					pos = "S";
 					process();
@@ -598,15 +605,17 @@ var process = function(){
 					console.log("brickCarry = " + brickCarry)
 					brick = 5
 				}else if(userInput == "leave"){
+					pos = 'center'
+					process()
 
 				}
 		}else if(brickHole == 1){
 			contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
-			if(userInput == "leave" || userInput == "south"){
+			if(userInput == "leave"){
 				pos = 'center';
-
+				process()
 			}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
-				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate";
+				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
 				brickHole = 5;
 				rock = true;
 				pos = 'center'
@@ -614,9 +623,9 @@ var process = function(){
 			}
 		}else{
 		contentBox.innerHTML = "You are in the north room, there is nothing here. Will you leave the room?";
-			if(userInput == "yes" || userInput == "south"){
+			if(userInput == "yes"){
 				pos = 'center';
-
+				porcess()
 			}else{}
 		}
 		prePos = 'N'
@@ -663,33 +672,36 @@ var process = function(){
 		}else if(brick == 2){
 			contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
 				if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
-					contentBox.innerHTML = "You picked up the brick and left the room";
+					contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
 					pos = 'center';
 					brickCarry = true
 					console.log("brickCarry = " +brickCarry);
 					brick = 5
 				}else if(userInput == "leave"){
 					pos = 'center'
-					process();
+					process()
+
 				}
 		}else if(brickHole == 2){
 			contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
 			if(userInput == "leave"|| userInput == "west"){
 				pos = 'center';
+				process()
 			}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
-				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate"
+				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue"
 				brickHole = 5;
 				rock = true;
 				pos = 'center'
 			}
 		}else{
 		contentBox.innerHTML = "You are in the east room, there is nothing here. Will you leave the room";
-			if(userInput == "yes"|| userInput == "west"){
+		if(userInput == "yes"){
 				pos = 'center';
+				process()
 
-			}else{}
 		}
-		prePos = 'E'
+	}
+	prePos = 'E'
 
 
 
@@ -734,29 +746,31 @@ var process = function(){
 		}else if(brick == 3){
 			contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
 				if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
-					contentBox.innerHTML = "You picked up the brick and left the room";
+					contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
 					pos = 'center';
 					brickCarry = true
 					console.log("brickCarry = " +brickCarry);
 					brick = 5
 				}else if(userInput == "leave"){
 					pos = 'center'
-					process();
+					process()
+
 				}
 		}else if(brickHole == 3){
 			contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
 			if(userInput == "leave" || userInput == "north"){
 				pos = 'center';
 			}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
-				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate";
+				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
 				brickHole = 5;
 				rock = true;
 				pos = 'center'
 			}
 		}else{
 		contentBox.innerHTML = "You are in the south room, there is nothing here. Will you leave the room";
-			if(userInput === "yes"|| userInput == "north"){
+			if(userInput === "yes"){
 				pos = 'center';
+				process()
 
 			}else{}
 		}
@@ -779,7 +793,7 @@ var process = function(){
 
 				}
 			}else if(userInput == "no" || userInput == "run"){
-				if(run == 1){
+									if(run == 1){
 					console.log(run)
 					contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
 					pos = 'center'
@@ -804,38 +818,39 @@ var process = function(){
 		}else if(brick == 0){
 			contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
 				if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
-					contentBox.innerHTML = "You picked up the brick and left the room";
+					contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
 					pos = 'center';
 					brickCarry = true
 					console.log("brickCarry = " +brickCarry);
 					brick = 5
 				}else if(userInput == "leave"|| userInput == "east"){
-
+					pos = 'center'
 				}
 		}else if(brickHole == 0){
 			contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
 			if(userInput == "leave"){
 				pos = 'center';
+				process()
 			}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
-				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate";
+				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
 				brickHole = 5;
 				rock = true;
 				pos = 'center'
 			}			
 		}else{
 		contentBox.innerHTML = "You are in the west room, there is nothing here. Will you leave the room";
-			if(userInput == "yes"|| userInput == "east"){
+			if(userInput == "yes"){
 				pos = 'center';
-
-			}else{
+				process()
 
 			}
 		}
 		prePos = 'W'
 	
 	}
+}	
 
-}
+
 
 
 

@@ -18,7 +18,7 @@
 <input type="text" id="inputBox" onkeypress="return process(event)">
 <button onclick="process()">Enter</button>
 <div id='contentBox'></div>
-<div id='instructBox'></div>
+<div id='invenBox'></div>
 <script type="text/javascript">
 
 
@@ -124,13 +124,13 @@ var reset = function(){
 var process = function(e){
 	var contentBox = document.getElementById('contentBox');
 	var userInput = document.getElementById('inputBox').value;
-	//allows for the enter key to be used
-	if(e.key === "Enter" ) {
+	if(e.key = 'Enter'){
 		//checks what pos the user is in and puts them in the right room
 		if(pos === 'center'){
 			if(rock == true && rockCarry == false){
 				contentBox.innerHTML = "You see a rocket launcher laying in the middle of some rubble and an open hole in the ceiling, what will you do?";
-				if(userInput === "pick up rocket launcher"){
+				if(userInput === "pick up rocket launcher" || userInput === "grab" || userInput === "pick up" || userInput === "rocket launcher"){
+					invenBox.innerHTML = "Inventory = Rocket Launcher";
 					rockCarry = true;
 					console.log("rockCarry = " + rockCarry);
 					process()
@@ -155,6 +155,7 @@ var process = function(e){
 
 			}else if(rockCarry == true){
 				contentBox.innerHTML = " You have the rocket launcher. There is a room to the north, east, south and west.";
+				invenBox.innerHTML = "Inventory = Rocket Launcher"
 				if(userInput === "north"||userInput === "go north"){
 					pos = 'N';
 					process();
@@ -204,16 +205,17 @@ var process = function(e){
 						pos = 'center'
 					}else if(run !== 1){
 						contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
-
+						pos = ""
 
 					}
 				}else if(userInput == "no" || userInput == "run"){
-										if(run == 1){
+					if(run == 1){
 						console.log(run)
 						contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
 						pos = 'center'
 					}else if(run !== 1){
 						contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
+						pos = ""
 					}
 
 				}
@@ -223,8 +225,6 @@ var process = function(e){
 					contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
 					attack = true
 					console.log("attack = " + attack)
-
-
 				}
 			}else if(attack == true){
 				if(userInput == "open door" || userInput == "use door"){
@@ -233,38 +233,48 @@ var process = function(e){
 
 				//kill the dragon
 			}else if(brick == 1){
-				contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
-					if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
-						contentBox.innerHTML = "You picked up the brick and left the room, press enter to continue";
-						pos = 'center';
-						brickCarry = true;
-						console.log("brickCarry = " + brickCarry)
-						brick = 5
-					}else if(userInput == "leave"){
-						pos = 'center'
-						process()
+				contentBox.innerHTML = "You see a brick laying on the ground, there is a room to the west. what will you do?";
+				if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
+					invenBox.innerHTML = "Inventory = Brick"
+					contentBox.innerHTML = "You picked up the brick and left the room, press enter to continue";
+					pos = 'center';
+					brickCarry = true;
+					console.log("brickCarry = " + brickCarry)
+					brick = 5
+				}else if(userInput == "leave"){
+					pos = 'center'
+					process()
 
-					}
+				}else if(userInput == "west"||userInput == "go west"){
+					pos = "nw"
+					process()
+				}
 			}else if(brickHole == 1){
-				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
+				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is a room to the west. what will you do?";
 				if(userInput == "leave"){
 					pos = 'center';
 					process()
 				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
+					invenBox.innerHTML = ""
 					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
 					brickHole = 5;
 					rock = true;
 					pos = 'center'
-
+				}else if(userInput == "west"||userInput == "go west"){
+					pos = "nw"
+					process()
 				}
 			}else{
-			contentBox.innerHTML = "You are in the north room, there is nothing here. Will you leave the room?";
-				if(userInput == "yes"){
+			contentBox.innerHTML = "You are in the north room, there is a room to the west. what will you do?";
+				if(userInput == "south" || userInput == "go south"){
 					pos = 'center';
 					porcess()
-				}else{}
+				}else if(userInput == "west"||userInput == "go west"){
+					pos = "nw"
+					process()
+				}
 			}
-			prePos = 'N'
+
 
 
 
@@ -278,15 +288,17 @@ var process = function(e){
 						contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
 						pos = 'center'
 					}else if(run !== 1){
+						pos = ""
 						contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
 
 					}
 				}else if(userInput == "no" || userInput == "run"){
-										if(run == 1){
+					if(run == 1){
 						console.log(run)
 						contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
 						pos = 'center'
 					}else if(run !== 1){
+						pos = ""
 						contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
 					}
 
@@ -308,6 +320,7 @@ var process = function(e){
 			}else if(brick == 2){
 				contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
 					if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
+						invenBox.innerHTML = "Inventory = Brick"
 						contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
 						pos = 'center';
 						brickCarry = true
@@ -324,6 +337,7 @@ var process = function(e){
 					pos = 'center';
 					process()
 				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
+					invenBox.innerHTML = ""
 					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue"
 					brickHole = 5;
 					rock = true;
@@ -353,7 +367,7 @@ var process = function(e){
 						pos = 'center'
 					}else if(run !== 1){
 						contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
-
+						pos = ""
 					}
 				}else if(userInput == "no" || userInput == "run"){
 										if(run == 1){
@@ -362,7 +376,7 @@ var process = function(e){
 						pos = 'center'
 					}else if(run !== 1){
 						contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
-
+						pos = ""
 					}
 				}
 			}else if(mon == 3 && rockCarry == true && attack == false){
@@ -382,6 +396,7 @@ var process = function(e){
 			}else if(brick == 3){
 				contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
 					if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
+						invenBox.innerHTML = "Inventory = Brick"
 						contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
 						pos = 'center';
 						brickCarry = true
@@ -397,6 +412,7 @@ var process = function(e){
 				if(userInput == "leave" || userInput == "north"){
 					pos = 'center';
 				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
+					invenBox.innerHTML = ""
 					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
 					brickHole = 5;
 					rock = true;
@@ -426,6 +442,7 @@ var process = function(e){
 						pos = 'center'
 					}else if(run !== 1){
 						contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
+						pos = ""
 
 					}
 				}else if(userInput == "no" || userInput == "run"){
@@ -435,25 +452,30 @@ var process = function(e){
 						pos = 'center'
 					}else if(run !== 1){
 						contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
+						pos = ""
 					}
 
 				}
 			}else if(mon == 0 && rockCarry == true && attack == false){
 				contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
 				if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
-					contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
+					contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door to the west and to the north."
 					attack = true
 					console.log("attack = " + attack)
 
 				}
 			}else if(attack == true){
-				if(userInput == "open door" || userInput == "use door"){
+				if(userInput == "west" || userInput == "west door" || userInput === "use west door"){
 						contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
+				}else if(userInput == "north" || userInput == "north door" || userInput == "use north door"){
+					pos = "nw"
+					process()
 				}
 
 			}else if(brick == 0){
-				contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
+				contentBox.innerHTML = "You see a brick laying on the ground,  and a room to the north, what will you do?";
 					if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
+						invenBox.innerHTML = "Inventory = Brick"
 						contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
 						pos = 'center';
 						brickCarry = true
@@ -461,18 +483,25 @@ var process = function(e){
 						brick = 5
 					}else if(userInput == "leave"|| userInput == "east"){
 						pos = 'center'
+					}else if (userInput == "north" || userInput == "north door" || userInput == "use north door"){
+						pos = "nw"
+						process()
 					}
 			}else if(brickHole == 0){
-				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
+				contentBox.innerHTML = "You see a brick shaped hole in the wall,  and a room to the north, what would you like to do?";
 				if(userInput == "leave"){
 					pos = 'center';
 					process()
 				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
+					invenBox.innerHTML = ""
 					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
 					brickHole = 5;
 					rock = true;
 					pos = 'center'
-				}			
+				}else if(userInput == "north" || userInput == "north door" || userInput == "use north door"){
+					pos = "nw"
+					process()
+				}
 			}else{
 			contentBox.innerHTML = "You are in the west room, there is nothing here. Will you leave the room";
 				if(userInput == "yes"){
@@ -481,32 +510,66 @@ var process = function(e){
 
 				}
 			}
-			prePos = 'W'
+			
 		
+		}else if(pos = "nw"){
+			contentBox.innerHTML = "You have entered the north west room.  There is northing else but a door to the south and to the east.  Where will you go?"
+			if(userInput == "go south" || userInput == "south"){
+				pos = 'W'
+				process()
+
+			}else if (userInput == "go east" || userInput == "east"){
+				pos = 'N'
+				process()
+
+			}
 		}
-	}	
-}
+	}
+}	
+
 
 
 var process = function(){
 	var contentBox = document.getElementById('contentBox');
 	var userInput = document.getElementById('inputBox').value;
-	//checks what pos the user is in and puts them in the right room
-	if(pos === 'center'){
-		if(rock == true && rockCarry == false){
-			contentBox.innerHTML = "You see a rocket launcher laying in the middle of some rubble and an open hole in the ceiling, what will you do?";
-			if(userInput === "pick up rocket launcher"){
-				rockCarry = true;
-				console.log("rockCarry = " + rockCarry);
-				process()
 
-			}else{
+		//checks what pos the user is in and puts them in the right room
+		if(pos === 'center'){
+			if(rock == true && rockCarry == false){
+				contentBox.innerHTML = "You see a rocket launcher laying in the middle of some rubble and an open hole in the ceiling, what will you do?";
+				if(userInput === "pick up rocket launcher" || userInput === "grab" || userInput === "pick up" || userInput === "rocket launcher"){
+					invenBox.innerHTML = "Inventory = Rocket Launcher";
+					rockCarry = true;
+					console.log("rockCarry = " + rockCarry);
+					process()
+					
+
+				}else{
+					if(userInput === "north"||userInput === "go north"){
+						pos = 'N';
+						process();
+					}else if(userInput === "east" || userInput === " go east" ){
+						pos = "E";
+						process();     
+					}else if(userInput === "south"||userInput === "go south"){
+						pos = "S";
+						process();
+					}else if(userInput === "west"||userInput === "go west"){
+						pos = "W";
+						process();
+					}
+
+				}
+
+			}else if(rockCarry == true){
+				contentBox.innerHTML = " You have the rocket launcher. There is a room to the north, east, south and west.";
+				invenBox.innerHTML = "Inventory = Rocket Launcher"
 				if(userInput === "north"||userInput === "go north"){
 					pos = 'N';
 					process();
 				}else if(userInput === "east" || userInput === " go east" ){
 					pos = "E";
-					process();     
+					process();
 				}else if(userInput === "south"||userInput === "go south"){
 					pos = "S";
 					process();
@@ -515,90 +578,72 @@ var process = function(){
 					process();
 				}
 
-			}
-
-		}else if(rockCarry == true){
-			contentBox.innerHTML = " You have the rocket launcher. There is a room to the north, east, south and west.";
-			if(userInput === "north"||userInput === "go north"){
-				pos = 'N';
-				process();
-			}else if(userInput === "east" || userInput === " go east" ){
-				pos = "E";
-				process();
-			}else if(userInput === "south"||userInput === "go south"){
-				pos = "S";
-				process();
-			}else if(userInput === "west"||userInput === "go west"){
-				pos = "W";
-				process();
-			}
-
-		}else{
-
-
-			contentBox.innerHTML = "You are in a dark, cold room.  there is a room to the north, east, south and west.";
-			if(userInput === "north"||userInput === "go north"){
-				pos = 'N';
-				process();
-			}else if(userInput === "east" || userInput === " go east" ){
-				pos = "E";
-				process();
-			}else if(userInput === "south"||userInput === "go south"){
-				pos = "S";
-				process();
-			}else if(userInput === "west"||userInput === "go west"){
-				pos = "W";
-				process();
-			
 			}else{
 
+
+				contentBox.innerHTML = "You are in a dark, cold room.  there is a room to the north, east, south and west.";
+				if(userInput === "north"||userInput === "go north"){
+					pos = 'N';
+					process();
+				}else if(userInput === "east" || userInput === " go east" ){
+					pos = "E";
+					process();
+				}else if(userInput === "south"||userInput === "go south"){
+					pos = "S";
+					process();
+				}else if(userInput === "west"||userInput === "go west"){
+					pos = "W";
+					process();
+				
+				}else{
+
+				};
 			};
-		};
 
 
 
-	//the north position
-	}else if(pos === 'N'){
-		if(mon == 1 && rockCarry == false){
-			contentBox.innerHTML = "You enter the North room. There is a dragon. will you try to attack the dragon";
-			if(userInput == "yes"){
-				if(run == 1){
-					console.log(run)
-					contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
-					pos = 'center'
-				}else if(run !== 1){
-					contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
+		//the north position
+		}else if(pos === 'N'){
+			if(mon == 1 && rockCarry == false){
+				contentBox.innerHTML = "You enter the North room. There is a dragon. will you try to attack the dragon";
+				if(userInput == "yes"){
+					if(run == 1){
+						console.log(run)
+						contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
+						pos = 'center'
+					}else if(run !== 1){
+						contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
+						pos = ""
 
+					}
+				}else if(userInput == "no" || userInput == "run"){
+										if(run == 1){
+						console.log(run)
+						contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
+						pos = 'center'
+					}else if(run !== 1){
+						contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
+						pos = ""
+					}
 
 				}
-			}else if(userInput == "no" || userInput == "run"){
-									if(run == 1){
-					console.log(run)
-					contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
-					pos = 'center'
-				}else if(run !== 1){
-					contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
+			}else if(mon == 1 && rockCarry == true && attack == false){
+				contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
+				if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
+					contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
+					attack = true
+					console.log("attack = " + attack)
+				}
+			}else if(attack == true){
+				if(userInput == "open door" || userInput == "use door"){
+						contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
 				}
 
-			}
-		}else if(mon == 1 && rockCarry == true && attack == false){
-			contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
-			if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
-				contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
-				attack = true
-				console.log("attack = " + attack)
-
-
-			}
-		}else if(attack == true){
-			if(userInput == "open door" || userInput == "use door"){
-					contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
-			}
-
-			//kill the dragon
-		}else if(brick == 1){
-			contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
+				//kill the dragon
+			}else if(brick == 1){
+				contentBox.innerHTML = "You see a brick laying on the ground, there is a room to the west. what will you do?";
 				if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
+					invenBox.innerHTML = "Inventory = Brick"
 					contentBox.innerHTML = "You picked up the brick and left the room, press enter to continue";
 					pos = 'center';
 					brickCarry = true;
@@ -608,247 +653,284 @@ var process = function(){
 					pos = 'center'
 					process()
 
+				}else if(userInput == "west"||userInput == "go west"){
+					pos = "nw"
+					process()
 				}
-		}else if(brickHole == 1){
-			contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
-			if(userInput == "leave"){
-				pos = 'center';
-				process()
-			}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
-				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
-				brickHole = 5;
-				rock = true;
-				pos = 'center'
-
-			}
-		}else{
-		contentBox.innerHTML = "You are in the north room, there is nothing here. Will you leave the room?";
-			if(userInput == "yes"){
-				pos = 'center';
-				porcess()
-			}else{}
-		}
-		prePos = 'N'
-
-
-
-
-	}else if(pos === 'E'){
-		if(mon == 2 && rockCarry == false){
-			contentBox.innerHTML = "You enter the East room. There is a dragon. will you try to attack the dragon";
-			if(userInput == "yes"){
-				if(run == 1){
-					console.log(run)
-					contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
-					pos = 'center'
-				}else if(run !== 1){
-					contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
-
-				}
-			}else if(userInput == "no" || userInput == "run"){
-									if(run == 1){
-					console.log(run)
-					contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
-					pos = 'center'
-				}else if(run !== 1){
-					contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
-				}
-
-			}
-		}else if(mon == 2 && rockCarry == true && attack == false){
-			contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
-			if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
-				contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
-				attack = true
-				console.log("attack = " + attack)
-
-
-			}
-		}else if(attack == true){
-			if(userInput == "open door" || userInput == "use door"){
-					contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
-			}
-
-		}else if(brick == 2){
-			contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
-				if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
-					contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
+			}else if(brickHole == 1){
+				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is a room to the west. what will you do?";
+				if(userInput == "leave"){
 					pos = 'center';
-					brickCarry = true
-					console.log("brickCarry = " +brickCarry);
-					brick = 5
-				}else if(userInput == "leave"){
+					process()
+				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
+					invenBox.innerHTML = ""
+					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
+					brickHole = 5;
+					rock = true;
 					pos = 'center'
+				}else if(userInput == "west"||userInput == "go west"){
+					pos = "nw"
+					process()
+				}
+			}else{
+			contentBox.innerHTML = "You are in the north room, there is a room to the west. what will you do?";
+				if(userInput == "south" || userInput == "go south"){
+					pos = 'center';
+					porcess()
+				}else if(userInput == "west"||userInput == "go west"){
+					pos = "nw"
+					process()
+				}
+			}
+
+
+
+
+
+		}else if(pos === 'E'){
+			if(mon == 2 && rockCarry == false){
+				contentBox.innerHTML = "You enter the East room. There is a dragon. will you try to attack the dragon";
+				if(userInput == "yes"){
+					if(run == 1){
+						console.log(run)
+						contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
+						pos = 'center'
+					}else if(run !== 1){
+						contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
+						pos = ""
+					}
+				}else if(userInput == "no" || userInput == "run"){
+										if(run == 1){
+						console.log(run)
+						contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
+						pos = 'center'
+					}else if(run !== 1){
+						contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
+						pos = ""
+					}
+
+				}
+			}else if(mon == 2 && rockCarry == true && attack == false){
+				contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
+				if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
+					contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
+					attack = true
+					console.log("attack = " + attack)
+
+
+				}
+			}else if(attack == true){
+				if(userInput == "open door" || userInput == "use door"){
+						contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
+				}
+
+			}else if(brick == 2){
+				contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
+					if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
+						invenBox.innerHTML = "Inventory = Brick"
+						contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
+						pos = 'center';
+						brickCarry = true
+						console.log("brickCarry = " +brickCarry);
+						brick = 5
+					}else if(userInput == "leave"){
+						pos = 'center'
+						process()
+
+					}
+			}else if(brickHole == 2){
+				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
+				if(userInput == "leave"|| userInput == "west"){
+					pos = 'center';
+					process()
+				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
+					invenBox.innerHTML = ""
+					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue"
+					brickHole = 5;
+					rock = true;
+					pos = 'center'
+				}
+			}else{
+			contentBox.innerHTML = "You are in the east room, there is nothing here. Will you leave the room";
+			if(userInput == "yes"){
+					pos = 'center';
+					process()
+
+			}
+		}
+		prePos = 'E'
+
+
+
+
+
+		}else if(pos === 'S'){
+			if(mon == 3 && rockCarry == false){
+				contentBox.innerHTML = "You enter the Southh room. There is a dragon. will you try to attack the dragon";
+				if(userInput == "yes"){
+					if(run == 1){
+						console.log(run)
+						contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
+						pos = 'center'
+					}else if(run !== 1){
+						contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
+						pos = ""
+					}
+				}else if(userInput == "no" || userInput == "run"){
+										if(run == 1){
+						console.log(run)
+						contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
+						pos = 'center'
+					}else if(run !== 1){
+						contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
+						pos = ""
+					}
+				}
+			}else if(mon == 3 && rockCarry == true && attack == false){
+				contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
+				if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
+					contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
+					attack = true
+					console.log("attack = " + attack)
+
+
+				}
+			}else if(attack == true){
+				if(userInput == "open door" || userInput == "use door"){
+						contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
+				}
+
+			}else if(brick == 3){
+				contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
+					if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
+						invenBox.innerHTML = "Inventory = Brick"
+						contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
+						pos = 'center';
+						brickCarry = true
+						console.log("brickCarry = " +brickCarry);
+						brick = 5
+					}else if(userInput == "leave"){
+						pos = 'center'
+						process()
+
+					}
+			}else if(brickHole == 3){
+				contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
+				if(userInput == "leave" || userInput == "north"){
+					pos = 'center';
+				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
+					invenBox.innerHTML = ""
+					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
+					brickHole = 5;
+					rock = true;
+					pos = 'center'
+				}
+			}else{
+			contentBox.innerHTML = "You are in the south room, there is nothing here. Will you leave the room";
+				if(userInput === "yes"){
+					pos = 'center';
+					process()
+
+				}else{}
+			}
+			prePos = 'S'
+
+
+
+
+
+		}else if(pos === 'W'){
+			if(mon == 0 && rockCarry == false){
+				contentBox.innerHTML = "You enter the West room. There is a dragon. will you try to attack the dragon";
+				if(userInput == "yes"){
+					if(run == 1){
+						console.log(run)
+						contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
+						pos = 'center'
+					}else if(run !== 1){
+						contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
+						pos = ""
+					}
+				}else if(userInput == "no" || userInput == "run"){
+										if(run == 1){
+						console.log(run)
+						contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
+						pos = 'center'
+					}else if(run !== 1){
+						contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
+						pos = ""
+					}
+
+				}
+			}else if(mon == 0 && rockCarry == true && attack == false){
+				contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
+				if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
+					contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door to the west and to the north."
+					attack = true
+					console.log("attack = " + attack)
+
+				}
+			}else if(attack == true){
+				if(userInput == "west" || userInput == "west door" || userInput === "use west door"){
+						contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
+				}else if(userInput == "north" || userInput == "north door" || userInput == "use north door"){
+					pos = "nw"
+					process()
+				}
+
+			}else if(brick == 0){
+				contentBox.innerHTML = "You see a brick laying on the ground,  and a room to the north, what will you do?";
+					if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
+						invenBox.innerHTML = "Inventory = Brick"
+						contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
+						pos = 'center';
+						brickCarry = true
+						console.log("brickCarry = " +brickCarry);
+						brick = 5
+					}else if(userInput == "leave"|| userInput == "east"){
+						pos = 'center'
+					}else if (userInput == "north" || userInput == "north door" || userInput == "use north door"){
+						pos = "nw"
+						process()
+					}
+			}else if(brickHole == 0){
+				contentBox.innerHTML = "You see a brick shaped hole in the wall,  and a room to the north, what would you like to do?";
+				if(userInput == "leave"){
+					pos = 'center';
+					process()
+				}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
+					invenBox.innerHTML = ""
+					contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
+					brickHole = 5;
+					rock = true;
+					pos = 'center'
+				}else if(userInput == "north" || userInput == "north door" || userInput == "use north door"){
+					pos = "nw"
+					process()
+				}
+			}else{
+			contentBox.innerHTML = "You are in the west room, there is nothing here. Will you leave the room";
+				if(userInput == "yes"){
+					pos = 'center';
 					process()
 
 				}
-		}else if(brickHole == 2){
-			contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
-			if(userInput == "leave"|| userInput == "west"){
-				pos = 'center';
-				process()
-			}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
-				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue"
-				brickHole = 5;
-				rock = true;
-				pos = 'center'
 			}
-		}else{
-		contentBox.innerHTML = "You are in the east room, there is nothing here. Will you leave the room";
-		if(userInput == "yes"){
-				pos = 'center';
+			
+		
+		}else if(pos = "nw"){
+			contentBox.innerHTML = "You have entered the north west room.  There is northing else but a door to the south and to the east.  Where will you go?"
+			if(userInput == "go south" || userInput == "south"){
+				pos = 'W'
 				process()
 
-		}
-	}
-	prePos = 'E'
-
-
-
-
-
-	}else if(pos === 'S'){
-		if(mon == 3 && rockCarry == false){
-			contentBox.innerHTML = "You enter the Southh room. There is a dragon. will you try to attack the dragon";
-			if(userInput == "yes"){
-				if(run == 1){
-					console.log(run)
-					contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
-					pos = 'center'
-				}else if(run !== 1){
-					contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
-
-				}
-			}else if(userInput == "no" || userInput == "run"){
-									if(run == 1){
-					console.log(run)
-					contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
-					pos = 'center'
-				}else if(run !== 1){
-					contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
-
-				}
-			}
-		}else if(mon == 3 && rockCarry == true && attack == false){
-			contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
-			if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
-				contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
-				attack = true
-				console.log("attack = " + attack)
-
-
-			}
-		}else if(attack == true){
-			if(userInput == "open door" || userInput == "use door"){
-					contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
-			}
-
-		}else if(brick == 3){
-			contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
-				if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
-					contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
-					pos = 'center';
-					brickCarry = true
-					console.log("brickCarry = " +brickCarry);
-					brick = 5
-				}else if(userInput == "leave"){
-					pos = 'center'
-					process()
-
-				}
-		}else if(brickHole == 3){
-			contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
-			if(userInput == "leave" || userInput == "north"){
-				pos = 'center';
-			}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
-				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
-				brickHole = 5;
-				rock = true;
-				pos = 'center'
-			}
-		}else{
-		contentBox.innerHTML = "You are in the south room, there is nothing here. Will you leave the room";
-			if(userInput === "yes"){
-				pos = 'center';
-				process()
-
-			}else{}
-		}
-		prePos = 'S'
-
-
-
-
-
-	}else if(pos === 'W'){
-		if(mon == 0 && rockCarry == false){
-			contentBox.innerHTML = "You enter the West room. There is a dragon. will you try to attack the dragon";
-			if(userInput == "yes"){
-				if(run == 1){
-					console.log(run)
-					contentBox.innerHTML = "The dragon claws at you but it misses. you chicken out and run away";
-					pos = 'center'
-				}else if(run !== 1){
-					contentBox.innerHTML = "The dragon incinerates you before you had the chance to attack.";
-
-				}
-			}else if(userInput == "no" || userInput == "run"){
-									if(run == 1){
-					console.log(run)
-					contentBox.innerHTML = "The dragon claws at you but it misses. you run back into the center room";
-					pos = 'center'
-				}else if(run !== 1){
-					contentBox.innerHTML = "The dragon incinerates you before you had the chance to get away.";
-				}
-
-			}
-		}else if(mon == 0 && rockCarry == true && attack == false){
-			contentBox.innerHTML = "You enter the room, there is a dragon infront of you. what will you do?"
-			if(userInput === "shoot" || userInput === "shoot at dragon" || userInput === "use rocket launcher"|| userInput === "attack" || userInput === "attack dragon"){
-				contentBox.innerHTML = "You shoot the rocket launcher at the dragon.  The dragon dies from the explosion.  You look aroud the dragon and see a door."
-				attack = true
-				console.log("attack = " + attack)
-
-			}
-		}else if(attack == true){
-			if(userInput == "open door" || userInput == "use door"){
-					contentBox.innerHTML = "You open the door to fresh air and see that you are on a small island with no food. You dont know how to swim and you eat the dragon to find out that it is poisonous. You die, THE END"
-			}
-
-		}else if(brick == 0){
-			contentBox.innerHTML = "You see a brick laying on the ground,  there is nothing else in this room";
-				if(userInput == "pick up brick" || userInput == "grab" || userInput == "pick up" || userInput == "brick"){
-					contentBox.innerHTML = "You picked up the brick and left the room. Press enter to continue";
-					pos = 'center';
-					brickCarry = true
-					console.log("brickCarry = " +brickCarry);
-					brick = 5
-				}else if(userInput == "leave"|| userInput == "east"){
-					pos = 'center'
-				}
-		}else if(brickHole == 0){
-			contentBox.innerHTML = "You see a brick shaped hole in the wall,  there is nothing else, what would you like to do?";
-			if(userInput == "leave"){
-				pos = 'center';
-				process()
-			}else if(userInput == "brick" || userInput == "use brick" || userInput == "use" || userInput == "place brick in hole" && brickCarry == true){
-				contentBox.innerHTML = "You hear a crash coming from the center room, you go to investigate. Press enter to continue";
-				brickHole = 5;
-				rock = true;
-				pos = 'center'
-			}			
-		}else{
-		contentBox.innerHTML = "You are in the west room, there is nothing here. Will you leave the room";
-			if(userInput == "yes"){
-				pos = 'center';
+			}else if (userInput == "go east" || userInput == "east"){
+				pos = 'N'
 				process()
 
 			}
 		}
-		prePos = 'W'
-	
-	}
-}	
+}
 
 
 
